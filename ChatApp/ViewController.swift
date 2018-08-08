@@ -82,6 +82,19 @@ class ViewController: JSQMessagesViewController {
         
         return messages[indexPath.item].senderId == senderId ? 0 : 20
     }
+    
+    
+    // gönder butonuna basınca yapılacak işlemler
+    override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
+        
+//        let ref = Constants.dbRef.childByAutoId() // uniq id olusturma
+//        
+//        let message = ["senderId":senderId,"senderName":senderDisplayName,"mesaj":text]
+//        ref.setValue(message)
+        
+        finishSendingMessage()
+        
+    }
    
 }
 

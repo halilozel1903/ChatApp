@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9F71BDE7211B86B600D50F45 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F71BDE6211B86B600D50F45 /* Constants.swift */; };
 		9FCA90B42118AE3E008C306B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA90B32118AE3E008C306B /* AppDelegate.swift */; };
 		9FCA90B62118AE3E008C306B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FCA90B52118AE3E008C306B /* ViewController.swift */; };
 		9FCA90B92118AE3E008C306B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9FCA90B72118AE3E008C306B /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		56E8B441C25E72DD9A385A14 /* Pods-ChatApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatApp.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChatApp/Pods-ChatApp.release.xcconfig"; sourceTree = "<group>"; };
 		5FFFE953BC63A7EAAF34AA89 /* Pods_ChatApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F71BDE6211B86B600D50F45 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		9FCA90B02118AE3E008C306B /* ChatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9FCA90B32118AE3E008C306B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9FCA90B52118AE3E008C306B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 				9FCA90C22118AE3E008C306B /* Info.plist */,
 				9FCA90BA2118AE3E008C306B /* ChatApp.xcdatamodeld */,
 				9FCA90C82118AE8A008C306B /* GoogleService-Info.plist */,
+				9F71BDE6211B86B600D50F45 /* Constants.swift */,
 			);
 			path = ChatApp;
 			sourceTree = "<group>";
@@ -171,16 +174,20 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ChatApp/Pods-ChatApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework",
 				"${BUILT_PRODUCTS_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQMessagesViewController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQSystemSoundPlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -216,6 +223,7 @@
 				9FCA90BC2118AE3E008C306B /* ChatApp.xcdatamodeld in Sources */,
 				9FCA90B62118AE3E008C306B /* ViewController.swift in Sources */,
 				9FCA90B42118AE3E008C306B /* AppDelegate.swift in Sources */,
+				9F71BDE7211B86B600D50F45 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
