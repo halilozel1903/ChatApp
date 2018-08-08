@@ -17,6 +17,14 @@ class ViewController: JSQMessagesViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        // başlangıç için bazı elemanları gizleme
+        
+        // attach button gizleme
+        inputToolbar.contentView.leftBarButtonItem = nil
+    
+        collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
+        collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
+        
         // chat arayüzü tanımlandı.
         senderId = "1"
         senderDisplayName = "Halil Ozel"
@@ -35,11 +43,14 @@ class ViewController: JSQMessagesViewController {
     
     // lazy :  sadece kullanıldığı zaman çalıştırılacak
     
+    // giden mesaj renk ayarı
     lazy var outgoingBubble : JSQMessagesBubbleImage = {
         
         return JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleGreen())
     }()
     
+    
+    // gelen mesaj renk ayarı
     lazy var incomingBubble : JSQMessagesBubbleImage = {
         
         return JSQMessagesBubbleImageFactory().incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
@@ -48,9 +59,29 @@ class ViewController: JSQMessagesViewController {
     
     // mesajın gönderilme biçimi ayarlanıyor.
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
-        <#code#>
+        
+        return messages[indexPath.item].senderId == senderId ? outgoingBubble : incomingBubble
+        
+        // a ? b : c ternary
+        
     }
     
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
+        
+        return nil
+    }
+    
+    
+    // gönderici ismi gönderi ayarı
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
+        return messages[indexPath.item].senderId == senderId ? nil : NSAttributedString(string: messages[indexPath.item].senderDisplayName)
+    }
+    
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAt indexPath: IndexPath!) -> CGFloat {
+        
+        return messages[indexPath.item].senderId == senderId ? 0 : 20
+    }
    
 }
 
