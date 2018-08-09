@@ -9,9 +9,11 @@
 import UIKit
 import JSQMessagesViewController
 
-class ViewController: JSQMessagesViewController {
+class ViewController: JSQMessagesViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     var messages = [JSQMessage]()
+    
+    var imagePicker = UIImagePickerController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +22,7 @@ class ViewController: JSQMessagesViewController {
         // başlangıç için bazı elemanları gizleme
         
         // attach button gizleme
-        inputToolbar.contentView.leftBarButtonItem = nil
+        //inputToolbar.contentView.leftBarButtonItem = nil
     
         collectionView.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         collectionView.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
@@ -92,7 +94,52 @@ class ViewController: JSQMessagesViewController {
 //        let message = ["senderId":senderId,"senderName":senderDisplayName,"mesaj":text]
 //        ref.setValue(message)
         
+        self.messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
+            
+           collectionView.reloadData()
+        
+        
+        
         finishSendingMessage()
+        
+    }
+    
+    // attachment ile ilgili bir şeyler gönderilince çalışacak metod
+    override func didPressAccessoryButton(_ sender: UIButton!) {
+        
+        let actionSheet = UIAlertController(title: "Resim Seçme", message: "Lütfen bir resim seçiniz. !!!", preferredStyle: .actionSheet)
+        
+        
+        let resim = UIAlertAction(title: "Resimler", style: .default) { (action) in
+            
+            
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
+                
+                self.imagePicker.delegate = self
+                self.imagePicker.sourceType = UIImagePickerControllerSourceType.savedPhotosAlbum
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+            
+        }
+        
+        
+        let kamera = UIAlertAction(title: "Kameralar", style: .default) { (action) in
+            
+            
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
+                
+                self.imagePicker.delegate = self
+                self.imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }
+            
+        }
+        
+        let iptal = UIAlertAction(title: "İptal", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(resim)
+        actionSheet.addAction(kamera)
+        actionSheet.addAction(iptal)
         
     }
    
