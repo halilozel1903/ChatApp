@@ -141,7 +141,23 @@ class ViewController: JSQMessagesViewController,UIImagePickerControllerDelegate,
         actionSheet.addAction(kamera)
         actionSheet.addAction(iptal)
         
+        self.present(actionSheet, animated: true, completion: nil)
     }
    
+    
+    // resmin seçilmesi,seçildikten sonra resim albumünün kapanması , resmin mesaj olarak gözükmesi
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let resim = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            
+            let image = JSQPhotoMediaItem(image: resim)
+            
+            self.messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: image))
+        }
+        
+        dismiss(animated: true, completion: nil)
+        
+        collectionView.reloadData()
+    }
 }
 
