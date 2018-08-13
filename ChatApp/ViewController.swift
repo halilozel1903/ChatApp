@@ -91,15 +91,16 @@ class ViewController: JSQMessagesViewController,UIImagePickerControllerDelegate,
     // gönder butonuna basınca yapılacak işlemler
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
-//        let ref = Constants.dbRef.childByAutoId() // uniq id olusturma
-//        
-//        let message = ["senderId":senderId,"senderName":senderDisplayName,"mesaj":text]
-//        ref.setValue(message)
+        let ref = Constants.dbChats.childByAutoId() // uniq id olusturma
+        let message = ["senderId":senderId,"senderName":senderDisplayName,"mesaj":text]
+
+    
         
         self.messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
             
            collectionView.reloadData()
     
+        ref.setValue(message)
         
         finishSendingMessage()
         
