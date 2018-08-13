@@ -8,6 +8,8 @@
 
 import UIKit
 import JSQMessagesViewController
+import MobileCoreServices
+import AVKit
 
 class ViewController: JSQMessagesViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
@@ -97,8 +99,7 @@ class ViewController: JSQMessagesViewController,UIImagePickerControllerDelegate,
         self.messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
             
            collectionView.reloadData()
-        
-        
+    
         
         finishSendingMessage()
         
@@ -112,26 +113,13 @@ class ViewController: JSQMessagesViewController,UIImagePickerControllerDelegate,
         
         let resim = UIAlertAction(title: "Resimler", style: .default) { (action) in
             
-            
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.savedPhotosAlbum){
-                
-                self.imagePicker.delegate = self
-                self.imagePicker.sourceType = UIImagePickerControllerSourceType.savedPhotosAlbum
-                self.present(self.imagePicker, animated: true, completion: nil)
-            }
+            self.gorselSec(type: kUTTypeImage)
             
         }
         
         
         let kamera = UIAlertAction(title: "Kameralar", style: .default) { (action) in
-            
-            
-            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera){
-                
-                self.imagePicker.delegate = self
-                self.imagePicker.sourceType = UIImagePickerControllerSourceType.camera
-                self.present(self.imagePicker, animated: true, completion: nil)
-            }
+            self.gorselSec(type: kUTTypeMovie)
             
         }
         
@@ -144,6 +132,14 @@ class ViewController: JSQMessagesViewController,UIImagePickerControllerDelegate,
         self.present(actionSheet, animated: true, completion: nil)
     }
    
+    func gorselSec(type:NSString){
+        
+        self.imagePicker.delegate = self
+        self.imagePicker.mediaTypes = [type as String]
+        self.present(self.imagePicker,animated: true,completion: nil)
+        
+    }
+    
     
     // resmin seçilmesi,seçildikten sonra resim albumünün kapanması , resmin mesaj olarak gözükmesi
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
@@ -153,11 +149,35 @@ class ViewController: JSQMessagesViewController,UIImagePickerControllerDelegate,
             let image = JSQPhotoMediaItem(image: resim)
             
             self.messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: image))
+        } else if let video = info[UIImagePickerControllerMediaURL] as? URL{
+            let video = JSQVideoMediaItem(fileURL: video, isReadyToPlay: true)
+            
+            self.messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: video))
         }
         
         dismiss(animated: true, completion: nil)
         
         collectionView.reloadData()
     }
+    
+    
+    
+    // videonun çalıştırılması için gerekli işlemleri
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!) {
+        
+        let message = messages[indexPath.item]
+        
+        if message.isMediaMessage{
+            if let videoMesaj = message.media as? JSQVideoMediaItem{
+                
+                let oynatici = AVPlayer(url: videoMesaj.fileURL)
+                let oynaticiKontroller = AVPlayerViewController()
+                oynaticiKontroller.player = oynatici
+                present(oynaticiKontroller,animated: true,completion: nil)
+                
+            }
+        }
+    }
+    
 }
 
